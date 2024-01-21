@@ -1,0 +1,4 @@
+{
+    "env": "dev",
+    "django-secret-key": ""
+}

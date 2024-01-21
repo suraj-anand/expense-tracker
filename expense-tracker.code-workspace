@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"path": ".."
+		}
+	],
+	"settings": {
+		"terminal.integrated.env.linux": {
+			"config": "/home/suraj/config/expense-tracker-config.json"
+		}
+		
+	}
+}
