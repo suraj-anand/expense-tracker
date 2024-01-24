@@ -77,7 +77,7 @@ export function ExpenseFormModal(){
   }
 
   return (
-    <div className="modal bg-dark" id="expenseModal" data-bs-backdrop="static" data-bs-keyboard="true" tabIndex="1">
+    <div className="modal bg-dark" id="expenseModal" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="1">
           
           <div className="modal-header">
             <h1 className="modal-title fs-5" id="exampleModalLabel">Create Expense</h1>
@@ -102,11 +102,13 @@ export function ExpenseFormModal(){
               <label htmlFor="amount" className='mt-4'>Enter Title <span className='text-danger fs-5'>*</span></label>
               <input type="text" name="title" 
                       id="title" className='form-control input-dark'
+                      autoComplete='off'
                       {...register("title")} />
 
               <label htmlFor="amount" className='mt-4'>Enter Description</label>
               <input type="text" name="title" id="title"  
                       className='form-control input-dark'
+                      autoComplete='off'
                       {...register("description")} />
 
                 <label htmlFor="amount" className='mt-4'>Select Category</label>
@@ -120,8 +122,14 @@ export function ExpenseFormModal(){
                       ...theme,
                       colors: {
                         ...theme.colors,
-                        neutral0: 'black',
-                        primary25: "darkgray"
+                        primary25: "white",
+                        dangerLight: "black",
+                        neutral0: "black",
+                        neutral20: "white",
+                        neutral50: "white",
+                        neutral80: "white",
+                        primary25: "darkgray",
+                        neutral10: "green",
                       }
                     })}
                   />
@@ -137,8 +145,14 @@ export function ExpenseFormModal(){
                     ...theme,
                     colors: {
                       ...theme.colors,
-                      neutral0: 'black',
-                      primary25: "darkgray"
+                      primary25: "white",
+                      dangerLight: "black",
+                      neutral0: "black",
+                      neutral20: "white",
+                      neutral50: "white",
+                      neutral80: "white",
+                      primary25: "darkgray",
+                      neutral10: "blue",
                     }
                   })}
                   />
