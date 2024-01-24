@@ -2,10 +2,10 @@ import { Routes, Route, BrowserRouter as Router } from 'react-router-dom'
 import { 
   HomePage, PageNotFound,
   Report, Login
-} from './pages'
+} from '@src/pages'
 import ProtectedRoutes from './utils/ProtectedRoutes'
-import { AuthContext, AuthContextProvider } from '@src/context/AuthContext'
-import { ExpenseContext, ExpenseContextProvider } from '@src/context/ExpenseContext'
+import { AuthContextProvider } from '@src/context/AuthContext'
+import { ExpenseContextProvider } from '@src/context/ExpenseContext'
 
 function App() {
 

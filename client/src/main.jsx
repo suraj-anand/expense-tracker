@@ -8,8 +8,8 @@ import {BASE_URL} from './constants.js'
 
 if(import.meta.env.VITE_ENV == "dev"){
     axios.defaults.baseURL = BASE_URL;
-    axios.defaults.withCredentials = true;
 }
+axios.defaults.withCredentials = true;
 
 ReactDOM.createRoot(document.getElementById('root')).render(
     <App />

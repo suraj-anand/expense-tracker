@@ -4,6 +4,16 @@ export const COLORS = {
     "FADED_BLACK": "#1A120B"
 }
 
+export const BS_TEXT_COLORS = [
+    "text-bg-primary",
+    "text-bg-secondary",
+    "text-bg-success",
+    "text-bg-danger",
+    "text-bg-warning",
+    "text-bg-info",
+    "text-bg-dark",
+]
+
 export const DEFAULT_CATEGORIES = [
     {"label": "food", "value": "food"}, 
     {"label": "shopping", "value": "shopping"}, 
@@ -32,3 +42,8 @@ export const MONTHS = [
     'November',
     'December' 
 ]
+
+export const VIEWS = {
+    MONTHLY_VIEW: "Monthly View",
+    YEARLY_VIEW: "Yearly View"
+}

@@ -1,4 +1,5 @@
 {
     "env": "dev",
-    "django-secret-key": ""
+    "django-secret-key": "",
+    "jwt-secret": ""
 }

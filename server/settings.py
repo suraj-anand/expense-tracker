@@ -37,7 +37,6 @@ DEBUG = env.get("env") == "dev"
 
 ALLOWED_HOSTS = ["*"]
 
-
 # Application definition
 USER_APPS = [
     "api"
@@ -50,13 +49,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    "corsheaders",
     "rest_framework",
-    "corsheaders"
 ] + USER_APPS
 
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
     "corsheaders.middleware.CorsMiddleware",
+    'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -66,15 +65,134 @@ MIDDLEWARE = [
 ]
 
 # Cors definiton
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",  # Add the origins you want to allow
-    "http://localhost:5173"
-]
+CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = True
-CORS_ALLOW_METHODS = ['*']
-CORS_ALLOW_HEADERS = ['*']
+CORS_ALLOW_METHODS = [
+    "DELETE",
+    "GET",
+    "OPTIONS",
+    "PATCH",
+    "POST",
+    "PUT",
+]
 
-
+CORS_ALLOW_HEADERS = [
+    "WWW-Authenticate",
+    "Authorization",
+    "Age",
+    "Cache-Control",
+    "Expires",
+    "Warning",
+    "Accept-CH",
+    "Accept-CH-Lifetime",
+    "Content-DPR",
+    "Vary",
+    "Connection",
+    "Keep-Alive",
+    "Accept",
+    "Accept-Encoding",
+    "Accept-Language",
+    "Expect",
+    "Max-Forwards",
+    "Cookie",
+    "Set-Cookie",
+    "Access-Control-Allow-Origin",
+    "Access-Control-Allow-Credentials",
+    "Access-Control-Allow-Headers",
+    "Access-Control-Allow-Methods",
+    "Access-Control-Expose-Headers",
+    "Access-Control-Max-Age",
+    "Access-Control-Request-Headers",
+    "Access-Control-Request-Method",
+    "Origin",
+    "Timing-Allow-Origin",
+    "Content-Disposition",
+    "Content-Length",
+    "Content-Type",
+    "Content-Encoding",
+    "Content-Language",
+    "Content-Location",
+    "Forwarded",
+    "X-Forwarded-For",
+    "X-Forwarded-Host",
+    "X-Forwarded-Proto",
+    "Via",
+    "Location",
+    "From",
+    "Host",
+    "Referer",
+    "Referrer-Policy",
+    "User-Agent",
+    "Allow",
+    "Server",
+    "Accept-Ranges",
+    "Range",
+    "Content-Range",
+    "Cross-Origin-Embedder-Policy",
+    "Cross-Origin-Opener-Policy",
+    "Cross-Origin-Resource-Policy",
+    "Content-Security-Policy",
+    "Content-Security-Policy-Report-Only",
+    "Expect-CT",
+    "Feature-Policy",
+    "Origin-Isolation",
+    "Strict-Transport-Security",
+    "Upgrade-Insecure-Requests",
+    "X-Content-Type-Options",
+    "X-Download-Options",
+    "X-Frame-Options",
+    "X-Permitted-Cross-Domain-Policies",
+    "X-Powered-By",
+    "X-XSS-Protection",
+    "Sec-Fetch-Site",
+    "Sec-Fetch-Mode",
+    "Sec-Fetch-User",
+    "Sec-Fetch-Dest",
+    "Service-Worker-Navigation-Preload",
+    "Last-Event-ID",
+    "NEL",
+    "Ping-From",
+    "Ping-To",
+    "Report-To",
+    "Transfer-Encoding",
+    "TE",
+    "Trailer",
+    "Accept-Push-Policy",
+    "Accept-Signature",
+    "Alt-Svc",
+    "Date",
+    "Early-Data",
+    "Large-Allocation",
+    "Link",
+    "Push-Policy",
+    "Retry-After",
+    "Signature",
+    "Signed-Headers",
+    "Server-Timing",
+    "Service-Worker-Allowed",
+    "SourceMap",
+    "Upgrade",
+    "X-DNS-Prefetch-Control",
+    "X-Firefox-Spdy",
+    "X-Pingback",
+    "X-Requested-With",
+    "X-Robots-Tag",
+    "X-UA-Compatible",
+    "ContentType",
+    "Content-type",
+    "content-type",
+    "contenttype",
+    "contentType",
+    "accept",
+    "authorization",
+    "dnt",
+    "origin",
+    "user-agent",
+    "x-csrftoken",
+    "x-requested-with",
+    "accept-encoding",
+    "Contentype",
+]
 
 
 ROOT_URLCONF = 'server.urls'

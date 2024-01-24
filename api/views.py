@@ -80,7 +80,7 @@ def login(request):
     
     try:
         if username is None or password is None:
-            return Response({"message": 'Invalid response'}, status=status.HTTP_401_UNAUTHORIZED)
+            return Response({"error": 'Invalid response'}, status=status.HTTP_401_UNAUTHORIZED)
         
         user = User.objects.filter(username=username).first()
         if not user:
@@ -95,7 +95,7 @@ def login(request):
             request.session["userId"] = user.id
             return Response({ "message": "Login Success", "token": token }, status=status.HTTP_200_OK)
         else:
-            return Response({"message": "Invalid Credentials"}, status=status.HTTP_401_UNAUTHORIZED)
+            return Response({"error": "Invalid Credentials"}, status=status.HTTP_401_UNAUTHORIZED)
     except Exception as err:
         return Response({"error": "server error"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
@@ -162,7 +162,7 @@ def expense(request):
 
         elif request.method == "DELETE":
             data = {
-                "expenseId": request.data.get("expenseId")
+                "expenseId": request.query_params.get("expenseId")
             }
             expense = Expense.objects.filter(id=data.get("expenseId")).first()
             if not expense:

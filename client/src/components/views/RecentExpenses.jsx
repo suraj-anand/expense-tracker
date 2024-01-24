@@ -28,7 +28,7 @@ const RecentExpenses = () => {
                 expenseLoading ? <div className="d-flex justify-content-center"><Spinner /></div> : 
             <>
                 {
-                    expense.length > 0 ?
+                    expense?.length > 0 ?
                     <div className="table-responsive align-middle">
                         <table className="table table-secondary">
                             <thead>
@@ -43,7 +43,7 @@ const RecentExpenses = () => {
                             </thead>
                             <tbody>
                                 {
-                                    expense.slice(0, nRecent).map((row, index) => {
+                                    expense?.slice(0, nRecent).map((row, index) => {
                                         return (<TableRow row={row} index={index} key={index} />)
                                     })
                                 }
@@ -52,7 +52,7 @@ const RecentExpenses = () => {
                     </div>
                     :
                     <p className='fs-5 text-center'>You've got no recent expenses. Create Your expenses by clicking on 
-                            <span className='mx-2'>{<Fab><IoIosAdd size={24} /></Fab>}</span> icon
+                            <button data-bs-toggle="modal" data-bs-target="#expenseModal" className='btn'>{<Fab><IoIosAdd size={24} /></Fab>}</button> icon
                     </p>
                 }
             </>
@@ -67,7 +67,7 @@ function Header({nRecent, setNrecent, expense}){
             <p className='fs-5 my-0'><IoTimerOutline size={24} /> Your Recent Expenses</p>
             
             {
-            expense.length > 0 &&
+            expense?.length > 0 &&
             <div className="ms-auto">
                 <Select value={nRecent}  sx={{ m: 1, backgroundColor: "#646cff" }} onChange={(event) => {setNrecent(event.target.value)}}>
                     <MenuItem value={3}>Recent 3 Expenses</MenuItem>
@@ -86,9 +86,19 @@ function TableRow({row, index}){
             <td>{index + 1}</td>
             <td>{format(row?.date, "dd-MMM-yy hh:mm aaa")}</td>
             <td>{row?.title}</td>
-            <td>{row?.category}</td>
+            <td>
+                {row?.category && JSON.parse(row?.category)?.map(e => (<CategoryTags category={e} />))}
+            </td>
             <td>{row?.amount}</td>
         </tr>
+    )
+}
+
+function CategoryTags({category}){
+    return (
+        <>
+            <div className="badge text-bg-primary p-2 mx-1">{category}</div>
+        </>
     )
 }
 

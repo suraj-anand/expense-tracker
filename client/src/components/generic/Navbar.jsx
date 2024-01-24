@@ -1,4 +1,4 @@
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import { COLORS } from '@src/constants'
 import { IoIosPricetags } from "react-icons/io";
 import { AiOutlineLogin, AiOutlineLogout  } from "react-icons/ai";
@@ -45,8 +45,16 @@ function NavbarLink({ icon, title, to }){
 
 function Logout(){
     
+    const navigate = useNavigate();
+    const { setAuthenticated } = useContext(AuthContext)
+
     async function handleLogout(){
-        await axios.get("/api/");
+        localStorage.clear();
+        const response = await axios.post("/api/logout/");
+        if(response.status === 200){
+            setAuthenticated(false);
+            navigate("/login");
+        }
     }
 
     return (
