@@ -4,8 +4,8 @@ import { ExpenseContext } from "@src/context/ExpenseContext"
 import { MONTHS } from "@src/constants"
 import { AiFillDelete } from "react-icons/ai";
 import { format } from 'date-fns';
-import { BS_TEXT_COLORS } from '@src/constants'
 import axios from "axios";
+import Badges from "@src/components/generic/Badges"
 
 const DataTable = ({activeMonth}) => {
 
@@ -72,8 +72,8 @@ const DataTable = ({activeMonth}) => {
                                         <td>{format(new Date(exp.date), "dd-MMM-yy")}</td>
                                         <td>{exp.title}</td>
                                         <td>{exp.description}</td>
-                                        <td>{exp.category && JSON.parse(exp.category).map(e => <Tags text={e} />)}</td>
-                                        <td>{exp.tags && JSON.parse(exp.tags).map(e => <Tags text={e} />)}</td>
+                                        <td>{exp.category && JSON.parse(exp.category).map(e => <Badges text={e} />)}</td>
+                                        <td>{exp.tags && JSON.parse(exp.tags).map(e => <Badges text={e} />)}</td>
                                         <td>{exp.amount}</td>
                                         <td><button className="btn btn-danger" onClick={(e) => {handleDelete(e, exp.id)}}><AiFillDelete size={24} /></button></td>
                                     </tr>
@@ -86,15 +86,6 @@ const DataTable = ({activeMonth}) => {
         }
     </>
   )
-}
-
-export function Tags({text}){
-    const randIndex = Math.floor(Math.random() * BS_TEXT_COLORS.length)
-    return (
-        <>
-            <div className={`badge mx-1 ${BS_TEXT_COLORS[randIndex]} p-2`}>{text}</div>
-        </>
-    )
 }
 
 
