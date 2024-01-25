@@ -10,7 +10,8 @@ export const ExpenseContextProvider = ({ children }) => {
     const [ expense, setExpense ] = useState([]);
     const [ expenseLoading, setExpenseLoading ] = useState(false);
     const [ refetch, setRefetch ] = useState(false);
-    
+
+    // make api call and fetch all expenses
     async function fetchExpenses(){
         setExpenseLoading(true);
         try{
@@ -27,20 +28,26 @@ export const ExpenseContextProvider = ({ children }) => {
         }
     }
 
-    function parseExpense(){ 
-        // aggregate months & years across all the expense
-        
-        // Function to convert date to desired format
-        const getDateDetails = (dateString) => {
-            const date = new Date(dateString);
-            const year = date.getFullYear();
-            const month = MONTHS[date.getMonth()];
-            return { year, month };
-        };
+    
+    function getParsedExpense(){
 
-        // Organize data into the desired structure
+        // Aggregated tags & categories
+        const _tags = new Set();
+        const _categories = new Set();
+
+        // aggregate months & years across all the expense & Organize data 
         const parsedData = expense.reduce((result, item) => {
+            
             const { year, month } = getDateDetails(item.date);
+
+            const { tags, category } = item; 
+            
+            if(tags){
+                JSON.parse(tags).map(e => _tags.add(e))
+            }
+            if(category){
+                JSON.parse(category).map(e => _categories.add(e))
+            }
 
             if (!result[year]) {
                 result[year] = {};
@@ -55,7 +62,7 @@ export const ExpenseContextProvider = ({ children }) => {
             return result;
         }, {});
 
-        return parsedData;
+        return {parsedExpense: parsedData, aggregatedTags: Array.from(_tags), aggregatedCategories: Array.from(_categories)};
     }
 
     useEffect(() => {
@@ -65,7 +72,7 @@ export const ExpenseContextProvider = ({ children }) => {
     
     return (
         <ExpenseContext.Provider value={{
-                    expense, parsedExpense: parseExpense(), setExpense,
+                    expense, ...getParsedExpense(), setExpense,
                     expenseLoading, setExpenseLoading,
                     refetch, setRefetch
                 }}>
@@ -73,3 +80,12 @@ export const ExpenseContextProvider = ({ children }) => {
         </ExpenseContext.Provider>
     )
 }
+
+// Helpers
+// Function to convert date to desired format
+export const getDateDetails = (dateString) => {
+    const date = new Date(dateString);
+    const year = date.getFullYear();
+    const month = MONTHS[date.getMonth()];
+    return { year, month };
+};

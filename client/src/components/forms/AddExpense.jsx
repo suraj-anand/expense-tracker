@@ -28,7 +28,7 @@ function AddExpense (){
 
 export function ExpenseFormModal(){
 
-  const { setRefetch } = useContext(ExpenseContext);
+  const { setRefetch, aggregatedTags, aggregatedCategories } = useContext(ExpenseContext);
   const closeBtn = useRef();
 
   const _date = new Date();
@@ -36,8 +36,6 @@ export function ExpenseFormModal(){
   const [ selectedTags, setSelectedTags ] = useState([]);
   const [ selectedCategories, setSelectedCategories ] = useState([])
   const [ date, setDate ] = useState(`${format(_date, "yyyy-MM-dd")}T${format(_date, "hh:mm")}`);
-  // const [ tags, setTags ] = useState(DEFAULT_TAGS); // will try to fetch and aggregate all the user created tags
-  // const [ category, setCategory ] = useState([]); // will try to fetch and aggregate all the user created tags
 
   const handleDateChange = (event) => {
     console.log(event.target.value)
@@ -113,7 +111,7 @@ export function ExpenseFormModal(){
 
                 <label htmlFor="amount" className='mt-4'>Select Category</label>
                 <Select 
-                  options={DEFAULT_CATEGORIES}
+                  options={[...DEFAULT_CATEGORIES, ...aggregatedCategories.map(e => ({"label": e, "value": e}))]}
                   isClearable={true}
                   isMulti={true}
                   closeMenuOnSelect={false}
@@ -137,7 +135,7 @@ export function ExpenseFormModal(){
                 <Select 
                   isMulti={true}
                   isClearable={true}
-                  options={DEFAULT_TAGS}
+                  options={[...DEFAULT_TAGS, ...aggregatedTags.map(e =>  ({"label": e, "value": e}))]}
                   closeMenuOnSelect={false}
                   onChange={handleTagsChange}
                   theme={(theme) => ({
