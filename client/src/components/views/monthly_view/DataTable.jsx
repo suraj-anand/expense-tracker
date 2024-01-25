@@ -7,27 +7,9 @@ import { format } from 'date-fns';
 import axios from "axios";
 import Badges from "@src/components/generic/Badges"
 
-const DataTable = ({activeMonth}) => {
+const DataTable = ({ activeMonth, activeYear }) => {
 
-    const { expense, expenseLoading, setRefetch } = useContext(ExpenseContext)
-    let parsed_expense = {};
-    
-    expense?.forEach( e => {
-        const date = new Date(e.date);
-        const month = MONTHS[date.getMonth()];
-
-        if(Object.keys(parsed_expense).includes(month)){
-            parsed_expense = {
-                ...parsed_expense,
-                [month]:  [...parsed_expense[month], e]
-            }
-        } else {
-            parsed_expense = {
-                ...parsed_expense,
-                [month]: [e],
-            }
-        }
-    })
+    const { expenseLoading, parsedExpense, setRefetch } = useContext(ExpenseContext);
 
     async function handleDelete(event, id){
         console.log(`deleting, ${id}`)
@@ -48,7 +30,7 @@ const DataTable = ({activeMonth}) => {
     return (
     <>
         {
-            parsed_expense[activeMonth] && 
+            (activeYear && activeMonth) && parsedExpense[activeYear][activeMonth] && 
             <div class="table-responsive">
                 <table class="table table-hover">
                     <thead className="table-primary">
@@ -65,7 +47,7 @@ const DataTable = ({activeMonth}) => {
                     </thead>
                     <tbody>
                         {
-                            parsed_expense[activeMonth].map((exp, index) => {
+                            parsedExpense[activeYear][activeMonth].map((exp, index) => {
                                 return (
                                     <tr class="">
                                         <td>{index + 1}</td>

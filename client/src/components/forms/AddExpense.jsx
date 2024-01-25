@@ -122,7 +122,6 @@ export function ExpenseFormModal(){
                       ...theme,
                       colors: {
                         ...theme.colors,
-                        primary25: "white",
                         dangerLight: "black",
                         neutral0: "black",
                         neutral20: "white",
