@@ -1,7 +1,7 @@
 export const BASE_URL = "http://localhost:8000"
 
 export const COLORS = {
-    "FADED_BLACK": "#1A120B"
+    "FADED_BLACK": "#191919"
 }
 
 export const BS_TEXT_COLORS = [

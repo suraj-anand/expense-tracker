@@ -1,33 +1,16 @@
 import { useContext } from "react"
 import { Spinner } from 'react-bootstrap'
 import { ExpenseContext } from "@src/context/ExpenseContext"
-import { MONTHS } from "@src/constants"
 import { AiFillDelete } from "react-icons/ai";
 import { format } from 'date-fns';
-import { BS_TEXT_COLORS } from '@src/constants'
 import axios from "axios";
+import Badges from "@src/components/generic/Badges"
+import _ from "lodash"
 
-const DataTable = ({activeMonth}) => {
+const DataTable = ({ activeMonth, activeYear }) => {
 
-    const { expense, expenseLoading, setRefetch } = useContext(ExpenseContext)
-    let parsed_expense = {};
-    
-    expense?.forEach( e => {
-        const date = new Date(e.date);
-        const month = MONTHS[date.getMonth()];
-
-        if(Object.keys(parsed_expense).includes(month)){
-            parsed_expense = {
-                ...parsed_expense,
-                [month]:  [...parsed_expense[month], e]
-            }
-        } else {
-            parsed_expense = {
-                ...parsed_expense,
-                [month]: [e],
-            }
-        }
-    })
+    const { expenseLoading, parsedExpense, setRefetch } = useContext(ExpenseContext);
+    let total_amount = 0;
 
     async function handleDelete(event, id){
         console.log(`deleting, ${id}`)
@@ -48,7 +31,7 @@ const DataTable = ({activeMonth}) => {
     return (
     <>
         {
-            parsed_expense[activeMonth] && 
+            ( !_.isEmpty(parsedExpense) && activeYear && activeMonth) && parsedExpense[activeYear][activeMonth] && 
             <div class="table-responsive">
                 <table class="table table-hover">
                     <thead className="table-primary">
@@ -63,17 +46,18 @@ const DataTable = ({activeMonth}) => {
                             <th scope="col">#</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody className="align-middle">
                         {
-                            parsed_expense[activeMonth].map((exp, index) => {
+                            parsedExpense[activeYear][activeMonth].map((exp, index) => {
+                                total_amount += exp.amount;
                                 return (
                                     <tr class="">
                                         <td>{index + 1}</td>
                                         <td>{format(new Date(exp.date), "dd-MMM-yy")}</td>
                                         <td>{exp.title}</td>
                                         <td>{exp.description}</td>
-                                        <td>{exp.category && JSON.parse(exp.category).map(e => <Tags text={e} />)}</td>
-                                        <td>{exp.tags && JSON.parse(exp.tags).map(e => <Tags text={e} />)}</td>
+                                        <td>{exp.category && JSON.parse(exp.category).map(e => <Badges text={e} />)}</td>
+                                        <td>{exp.tags && JSON.parse(exp.tags).map(e => <Badges text={e} />)}</td>
                                         <td>{exp.amount}</td>
                                         <td><button className="btn btn-danger" onClick={(e) => {handleDelete(e, exp.id)}}><AiFillDelete size={24} /></button></td>
                                     </tr>
@@ -81,20 +65,20 @@ const DataTable = ({activeMonth}) => {
                             })
                         }
                     </tbody>
+
+                    <tfoot>
+                        <tr className="table-primary">
+                            <td colSpan={6}></td>
+                            <td>
+                                <span className="fs-5">Total: {total_amount}</span>
+                            </td>
+                        </tr>
+                    </tfoot>
                 </table>
             </div>
         }
     </>
   )
-}
-
-export function Tags({text}){
-    const randIndex = Math.floor(Math.random() * BS_TEXT_COLORS.length)
-    return (
-        <>
-            <div className={`badge mx-1 ${BS_TEXT_COLORS[randIndex]} p-2`}>{text}</div>
-        </>
-    )
 }
 
 

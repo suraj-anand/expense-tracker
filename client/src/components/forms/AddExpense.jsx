@@ -28,19 +28,16 @@ function AddExpense (){
 
 export function ExpenseFormModal(){
 
-  const { setRefetch } = useContext(ExpenseContext);
+  const { setRefetch, aggregatedTags, aggregatedCategories } = useContext(ExpenseContext);
   const closeBtn = useRef();
 
   const _date = new Date();
   const { register, getValues } = useForm();
   const [ selectedTags, setSelectedTags ] = useState([]);
   const [ selectedCategories, setSelectedCategories ] = useState([])
-  const [ date, setDate ] = useState(`${format(_date, "yyyy-MM-dd")}T${format(_date, "hh:mm")}`);
-  // const [ tags, setTags ] = useState(DEFAULT_TAGS); // will try to fetch and aggregate all the user created tags
-  // const [ category, setCategory ] = useState([]); // will try to fetch and aggregate all the user created tags
+  const [ date, setDate ] = useState(`${format(_date, "yyyy-MM-dd")}`);
 
   const handleDateChange = (event) => {
-    console.log(event.target.value)
     setDate(event.target.value);
   }
 
@@ -77,7 +74,7 @@ export function ExpenseFormModal(){
   }
 
   return (
-    <div className="modal bg-dark" id="expenseModal" data-bs-backdrop="static" data-bs-keyboard="true" tabIndex="1">
+    <div className="modal bg-dark" id="expenseModal" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="1">
           
           <div className="modal-header">
             <h1 className="modal-title fs-5" id="exampleModalLabel">Create Expense</h1>
@@ -95,23 +92,25 @@ export function ExpenseFormModal(){
                       {...register("amount")}  />
 
               <label htmlFor="amount" className='mt-4'>Select Date <span className='text-danger fs-5'>*</span></label>
-              <input type="datetime-local" name="datetime" 
+              <input type="date" name="datetime" 
                     id="datetime" className='form-control input-dark'
                     value={date} onChange={handleDateChange} />
 
               <label htmlFor="amount" className='mt-4'>Enter Title <span className='text-danger fs-5'>*</span></label>
               <input type="text" name="title" 
                       id="title" className='form-control input-dark'
+                      autoComplete='off'
                       {...register("title")} />
 
               <label htmlFor="amount" className='mt-4'>Enter Description</label>
               <input type="text" name="title" id="title"  
                       className='form-control input-dark'
+                      autoComplete='off'
                       {...register("description")} />
 
                 <label htmlFor="amount" className='mt-4'>Select Category</label>
                 <Select 
-                  options={DEFAULT_CATEGORIES}
+                  options={[...DEFAULT_CATEGORIES, ...aggregatedCategories.map(e => ({"label": e, "value": e}))]}
                   isClearable={true}
                   isMulti={true}
                   closeMenuOnSelect={false}
@@ -120,8 +119,13 @@ export function ExpenseFormModal(){
                       ...theme,
                       colors: {
                         ...theme.colors,
-                        neutral0: 'black',
-                        primary25: "darkgray"
+                        dangerLight: "black",
+                        neutral0: "black",
+                        neutral20: "white",
+                        neutral50: "white",
+                        neutral80: "white",
+                        primary25: "darkgray",
+                        neutral10: "green",
                       }
                     })}
                   />
@@ -130,15 +134,21 @@ export function ExpenseFormModal(){
                 <Select 
                   isMulti={true}
                   isClearable={true}
-                  options={DEFAULT_TAGS}
+                  options={[...DEFAULT_TAGS, ...aggregatedTags.map(e =>  ({"label": e, "value": e}))]}
                   closeMenuOnSelect={false}
                   onChange={handleTagsChange}
                   theme={(theme) => ({
                     ...theme,
                     colors: {
                       ...theme.colors,
-                      neutral0: 'black',
-                      primary25: "darkgray"
+                      primary25: "white",
+                      dangerLight: "black",
+                      neutral0: "black",
+                      neutral20: "white",
+                      neutral50: "white",
+                      neutral80: "white",
+                      primary25: "darkgray",
+                      neutral10: "blue",
                     }
                   })}
                   />

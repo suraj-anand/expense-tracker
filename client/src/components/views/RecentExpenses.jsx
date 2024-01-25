@@ -84,7 +84,7 @@ function TableRow({row, index}){
     return (
         <tr>
             <td>{index + 1}</td>
-            <td>{format(row?.date, "dd-MMM-yy hh:mm aaa")}</td>
+            <td>{format(row?.date, "dd-MMM-yy")}</td>
             <td>{row?.title}</td>
             <td>
                 {row?.category && JSON.parse(row?.category)?.map(e => (<CategoryTags category={e} />))}
