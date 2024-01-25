@@ -1,11 +1,11 @@
 import { useContext } from "react"
 import { Spinner } from 'react-bootstrap'
 import { ExpenseContext } from "@src/context/ExpenseContext"
-import { MONTHS } from "@src/constants"
 import { AiFillDelete } from "react-icons/ai";
 import { format } from 'date-fns';
 import axios from "axios";
 import Badges from "@src/components/generic/Badges"
+import _ from "lodash"
 
 const DataTable = ({ activeMonth, activeYear }) => {
 
@@ -30,7 +30,7 @@ const DataTable = ({ activeMonth, activeYear }) => {
     return (
     <>
         {
-            (activeYear && activeMonth) && parsedExpense[activeYear][activeMonth] && 
+            ( !_.isEmpty(parsedExpense) && activeYear && activeMonth) && parsedExpense[activeYear][activeMonth] && 
             <div class="table-responsive">
                 <table class="table table-hover">
                     <thead className="table-primary">

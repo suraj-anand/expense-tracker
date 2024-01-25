@@ -23,7 +23,6 @@ const Months = ({ setActiveMonth, activeYear, setActiveYear }) => {
     setActiveMonth(month);
   }
 
-  console.log(parsedExpense)
 
   return (
     <>
@@ -37,7 +36,7 @@ const Months = ({ setActiveMonth, activeYear, setActiveYear }) => {
     </p>
     <div className='d-flex gap-3 my-3 align-items-center justify-content-center w-100 flex-wrap'>
     {
-        parsedExpense[activeYear] && Object.keys(parsedExpense[activeYear]).map(month => (
+        (!_.isEmpty(parsedExpense) && parsedExpense[activeYear]) && Object.keys(parsedExpense[activeYear]).map(month => (
           <button className="btn btn-outline-secondary btn-month" id={`btn-${month}`}  onClick={(e) => (handleMonthClick(e, month))} >
             {month}
           </button>
