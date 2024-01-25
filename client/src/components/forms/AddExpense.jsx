@@ -35,10 +35,9 @@ export function ExpenseFormModal(){
   const { register, getValues } = useForm();
   const [ selectedTags, setSelectedTags ] = useState([]);
   const [ selectedCategories, setSelectedCategories ] = useState([])
-  const [ date, setDate ] = useState(`${format(_date, "yyyy-MM-dd")}T${format(_date, "hh:mm")}`);
+  const [ date, setDate ] = useState(`${format(_date, "yyyy-MM-dd")}`);
 
   const handleDateChange = (event) => {
-    console.log(event.target.value)
     setDate(event.target.value);
   }
 
@@ -93,7 +92,7 @@ export function ExpenseFormModal(){
                       {...register("amount")}  />
 
               <label htmlFor="amount" className='mt-4'>Select Date <span className='text-danger fs-5'>*</span></label>
-              <input type="datetime-local" name="datetime" 
+              <input type="date" name="datetime" 
                     id="datetime" className='form-control input-dark'
                     value={date} onChange={handleDateChange} />
 
