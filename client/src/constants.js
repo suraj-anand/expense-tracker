@@ -15,17 +15,17 @@ export const BS_TEXT_COLORS = [
 ]
 
 export const DEFAULT_CATEGORIES = [
-    {"label": "food", "value": "food"}, 
-    {"label": "shopping", "value": "shopping"}, 
-    {"label": "clothing", "value": "clothing"}, 
-    {"label": "misc", "value": "misc"}, 
-    {"label": "others", "value": "others"}, 
+    "food",
+    "shopping",
+    "clothing",
+    "misc",
+    "others",
 ]
 
 export const DEFAULT_TAGS = [
-    {"label": "for girlfriend", "value": "for girfriend"}, 
-    {"label": "sports", "value": "sports"}, 
-    {"label": "misc", "value": "misc"}, 
+    "for girlfriend",
+    "sports",
+    "misc",
 ]
 
 export const MONTHS = [
