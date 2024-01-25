@@ -10,6 +10,7 @@ import _ from "lodash"
 const DataTable = ({ activeMonth, activeYear }) => {
 
     const { expenseLoading, parsedExpense, setRefetch } = useContext(ExpenseContext);
+    let total_amount = 0;
 
     async function handleDelete(event, id){
         console.log(`deleting, ${id}`)
@@ -45,9 +46,10 @@ const DataTable = ({ activeMonth, activeYear }) => {
                             <th scope="col">#</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody className="align-middle">
                         {
                             parsedExpense[activeYear][activeMonth].map((exp, index) => {
+                                total_amount += exp.amount;
                                 return (
                                     <tr class="">
                                         <td>{index + 1}</td>
@@ -63,6 +65,15 @@ const DataTable = ({ activeMonth, activeYear }) => {
                             })
                         }
                     </tbody>
+
+                    <tfoot>
+                        <tr className="table-primary">
+                            <td colSpan={6}></td>
+                            <td>
+                                <span className="fs-5">Total: {total_amount}</span>
+                            </td>
+                        </tr>
+                    </tfoot>
                 </table>
             </div>
         }
