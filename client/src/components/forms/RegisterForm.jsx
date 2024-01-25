@@ -39,56 +39,64 @@ export default function RegisterForm(){
 
     return (
         <form onSubmit={handleRegister}>
-            <div className="d-flex gap-3">
-                <input type="text" 
-                    name="firstname" id="firstname" 
-                    placeholder='Firstname'
-                    autoComplete='off'
-                    className='login-input form-control my-3' 
-                    style={{
-                            width: "25rem",
-                        }}
-                    required
-                    {...register("first_name")}
-                    />
+            <div className="row">
+                <div className="d-flex justify-content-center col-12 col-lg-6">
+                    <input type="text" 
+                        name="firstname" id="firstname" 
+                        placeholder='Firstname'
+                        autoComplete='off'
+                        className='login-input form-control my-3' 
+                        style={{
+                                width: "25rem",
+                            }}
+                        required
+                        {...register("first_name")}
+                        />
+                </div>
 
-                <input type="text" 
-                    name="lastname" id="lastname" 
-                    placeholder='Lastname'
-                    autoComplete='off'
-                    className='login-input form-control my-3' 
-                    required
-                    style={{
-                            width: "25rem",
-                        }}
-                    {...register("last_name")}
-                    />
+                <div className="d-flex justify-content-center col-12 col-lg-6">
+                    <input type="text" 
+                        name="lastname" id="lastname" 
+                        placeholder='Lastname'
+                        autoComplete='off'
+                        className='login-input form-control my-3' 
+                        required
+                        style={{
+                                width: "25rem",
+                            }}
+                        {...register("last_name")}
+                        />
+                </div>
             </div>
+            
+            <div className="row">
+                <div className="d-flex justify-content-center col-12 col-lg-6">
+                    <input type="email" 
+                        name="email" id="email" 
+                        placeholder='Email'
+                        autoComplete='off'
+                        className='login-input form-control my-3' 
+                        required
+                        style={{
+                                width: "25rem",
+                            }}
+                        {...register("email")}
+                        />
+                </div>
 
-            <div className="d-flex gap-3">
-                <input type="email" 
-                    name="email" id="email" 
-                    placeholder='Email'
-                    autoComplete='off'
-                    className='login-input form-control my-3' 
-                    required
-                    style={{
-                            width: "25rem",
-                        }}
-                    {...register("email")}
-                    />
-
-                <input type="password" 
-                    name="password" id="password" 
-                    placeholder='Password'
-                    autoComplete='off'
-                    className='login-input form-control my-3' 
-                    style={{
-                            width: "25rem",
-                        }}
-                    required
-                    {...register("password")}
-                    />
+                <div className="d-flex justify-content-center col-12 col-lg-6">
+                    <input type="password" 
+                        name="password" id="password" 
+                        placeholder='Password'
+                        autoComplete='off'
+                        className='login-input form-control my-3' 
+                        style={{
+                                width: "25rem",
+                            }}
+                        required
+                        {...register("password")}
+                        />
+                </div>
             </div>
 
             <div className="d-flex flex-column align-items-center">
