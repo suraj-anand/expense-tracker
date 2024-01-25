@@ -121,7 +121,7 @@ def expense(request):
             expenses = Expense.objects.filter(user_created=user_id)
             serializer = ExpenseSerializer(expenses, many=True)
             print(serializer.data)
-            return Response({"result": serializer.data }, status=status.HTTP_201_CREATED)
+            return Response({"result": serializer.data }, status=status.HTTP_200_OK)
 
         elif request.method == "POST":
             data = {
