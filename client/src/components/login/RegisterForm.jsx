@@ -21,7 +21,6 @@ export default function RegisterForm(){
             "username": getValues()?.email,
             "password": getValues()?.password
         }
-        console.log(getValues());
         try {
             const response = await axios.post("/api/register/", {...payload});
             if([200, 201].includes(response.status)){

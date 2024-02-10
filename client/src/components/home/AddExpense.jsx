@@ -31,7 +31,7 @@ export function ExpenseFormModal(){
   const closeBtn = useRef();
 
   const _date = new Date();
-  const { register, getValues } = useForm();
+  const { register, getValues, reset } = useForm();
   const [ selectedTags, setSelectedTags ] = useState([]);
   const [ selectedCategories, setSelectedCategories ] = useState([])
   const [ date, setDate ] = useState(`${format(_date, "yyyy-MM-dd")}`);
@@ -41,11 +41,11 @@ export function ExpenseFormModal(){
   }
 
   const handleCategoryChange = (event) => {
-    setSelectedCategories(event?.map(e => e?.value));
+    setSelectedCategories(event);
   }
 
   const handleTagsChange = (event) => {
-    setSelectedTags(event?.map(e => e?.value));
+    setSelectedTags(event);
   }
 
   const handleSaveExpense = async (event) => {
@@ -54,30 +54,48 @@ export function ExpenseFormModal(){
       "title" : getValues()?.title,
       "description" : getValues()?.description,
       "date" : date,
-      "tags" : JSON.stringify(selectedTags),
-      "category" : JSON.stringify(selectedCategories),
+      "tags" : JSON.stringify(selectedTags?.map(e => e?.value)),
+      "category" : JSON.stringify(selectedCategories?.map(e => e?.value)),
     }
 
     if( !payload.amount || !payload.title || !date ) {
       alert("please fill all the required fields");
       return 
     }
+    
+    try {
+      const response = await axios.post("/api/expense/", payload);
+      if([200, 201].includes(response.status)){
 
-    const response = await axios.post("/api/expense/", payload);
-    if([200, 201].includes(response.status)){
-      closeBtn.current.click();
-      setRefetch(refetch => (!refetch));
-    } else {
-      alert("failed to create expense :(")
+        // Clear Inputs
+        setSelectedTags([])
+        setSelectedCategories([])
+        reset({
+          "amount": "",
+          "title" : "",
+          "description" : "",
+        })
+        setRefetch(refetch => (!refetch));
+
+        closeBtn.current.click()
+
+      } else {
+        alert("failed to create expense :(")
+      }      
+    } catch (error) {
+      console.log(error);
     }
   }
+
 
   return (
     <div className="modal bg-dark" id="expenseModal" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="1">
           
           <div className="modal-header">
             <h1 className="modal-title fs-5" id="exampleModalLabel">Create Expense</h1>
-            <button type="button" className="btn btn-outline-secondary me-3" data-dismiss="modal" data-bs-dismiss="modal" ref={closeBtn} >
+            <button type="button" className="btn btn-outline-secondary me-3"
+                data-dismiss="modal" data-bs-dismiss="modal" 
+                ref={closeBtn}>
               <IoIosCloseCircleOutline size={24} />
             </button>
           </div>
@@ -110,6 +128,7 @@ export function ExpenseFormModal(){
                 <label htmlFor="amount" className='mt-4'>Select Category</label>
                 <Select 
                   options={aggregatedCategories.map(e => ({"label": e, "value": e}))}
+                  value={selectedCategories}
                   isClearable={true}
                   isMulti={true}
                   closeMenuOnSelect={false}
@@ -131,9 +150,10 @@ export function ExpenseFormModal(){
 
                 <label htmlFor="amount" className='mt-4'>Select Tags</label>
                 <Select 
+                  options={aggregatedTags.map(e =>  ({"label": e, "value": e}))}
+                  value={selectedTags}
                   isMulti={true}
                   isClearable={true}
-                  options={aggregatedTags.map(e =>  ({"label": e, "value": e}))}
                   closeMenuOnSelect={false}
                   onChange={handleTagsChange}
                   theme={(theme) => ({

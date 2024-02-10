@@ -14,8 +14,6 @@ const Months = ({ setActiveMonth, activeYear, setActiveYear }) => {
     document.querySelectorAll(".btn-month").forEach(e => e.classList.remove("active"));
     setActiveYear(event.target.value);
     setActiveMonth(null);
-
-    console.log(event.target.value)
   }
 
   function handleMonthClick(event, month){

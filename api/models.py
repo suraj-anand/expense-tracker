@@ -10,6 +10,7 @@ class User(models.Model):
     password = models.TextField(blank=False)
 
 class Expense(models.Model):
+    id = models.TextField(primary_key=True)
     amount = models.IntegerField(null=False, blank=False)
     title = models.CharField(max_length=255, null=False, blank=False)
     description = models.TextField(blank=True, null=True)

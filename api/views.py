@@ -117,7 +117,6 @@ def expense(request):
     try:
         if request.method == "GET":
             user_id = request.session.get("userId")
-            print(user_id)
             expenses = Expense.objects.filter(user_created=user_id)
             serializer = ExpenseSerializer(expenses, many=True)
             print(serializer.data)
@@ -125,6 +124,7 @@ def expense(request):
 
         elif request.method == "POST":
             data = {
+                    "id": str(uuid.uuid4()),
                     "amount" : request.data.get("amount"),
                     "title" : request.data.get("title"),
                     "description" : request.data.get("description", ""),
