@@ -5,8 +5,8 @@
 		}
 	],
 	"settings": {
-		"terminal.integrated.env.linux": {
-			"config": "/home/suraj/gh/configs/expense-tracker-config.json"
+		"terminal.integrated.env.windows": {
+			"config": "C:\\Users\\Suraj\\Desktop\\blues\\config\\expense-tracker-config.json"
 		}
 	}
 }

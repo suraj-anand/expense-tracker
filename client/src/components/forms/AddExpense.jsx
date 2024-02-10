@@ -121,11 +121,11 @@ export function ExpenseFormModal(){
                         ...theme.colors,
                         dangerLight: "black",
                         neutral0: "black",
+                        neutral10: "green",
                         neutral20: "white",
                         neutral50: "white",
                         neutral80: "white",
                         primary25: "darkgray",
-                        neutral10: "green",
                       }
                     })}
                   />
@@ -141,7 +141,6 @@ export function ExpenseFormModal(){
                     ...theme,
                     colors: {
                       ...theme.colors,
-                      primary25: "white",
                       dangerLight: "black",
                       neutral0: "black",
                       neutral20: "white",
