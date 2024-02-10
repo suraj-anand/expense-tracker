@@ -46,7 +46,7 @@ export default function RegisterForm(){
                         autoComplete='off'
                         className='login-input form-control my-3' 
                         style={{
-                                width: "25rem",
+                                width: "20rem",
                             }}
                         required
                         {...register("first_name")}
@@ -61,7 +61,7 @@ export default function RegisterForm(){
                         className='login-input form-control my-3' 
                         required
                         style={{
-                                width: "25rem",
+                                width: "20rem",
                             }}
                         {...register("last_name")}
                         />
@@ -77,7 +77,7 @@ export default function RegisterForm(){
                         className='login-input form-control my-3' 
                         required
                         style={{
-                                width: "25rem",
+                                width: "20rem",
                             }}
                         {...register("email")}
                         />
@@ -90,7 +90,7 @@ export default function RegisterForm(){
                         autoComplete='off'
                         className='login-input form-control my-3' 
                         style={{
-                                width: "25rem",
+                                width: "20rem",
                             }}
                         required
                         {...register("password")}
