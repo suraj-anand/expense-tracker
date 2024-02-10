@@ -1,8 +1,16 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { Navbar, LoginForm, RegisterForm } from '@components'
 
 const Login = () => {
 
+    const navigate = useNavigate();
+    useEffect(() => {
+        if (localStorage.getItem("isAuthenticated") === "true"){
+            navigate("/");
+        }
+    }, [])
+    
     const [ view, setView ] = useState("login")
 
     function handleCreateAccountClick(event){
