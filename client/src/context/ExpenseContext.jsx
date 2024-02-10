@@ -1,6 +1,6 @@
 import { createContext, useEffect, useState } from 'react'
 import axios from 'axios';
-import { MONTHS } from '@src/constants'
+import { MONTHS,DEFAULT_TAGS, DEFAULT_CATEGORIES } from '@src/constants'
 
 export const ExpenseContext = createContext();
 
@@ -61,6 +61,14 @@ export const ExpenseContextProvider = ({ children }) => {
 
             return result;
         }, {});
+
+        DEFAULT_TAGS.forEach(tag => {
+            _tags.add(tag);
+        })
+
+        DEFAULT_CATEGORIES.forEach(category => {
+            _categories.add(category);
+        })
 
         return {parsedExpense: parsedData, aggregatedTags: Array.from(_tags), aggregatedCategories: Array.from(_categories)};
     }

@@ -1,5 +1,4 @@
 import { useForm } from 'react-hook-form'
-import { DEFAULT_TAGS, DEFAULT_CATEGORIES } from '@src/constants'
 import { useContext, useRef, useState } from 'react';
 import { Fab } from '@mui/material'
 import { IoIosAdd } from "react-icons/io";
@@ -110,7 +109,7 @@ export function ExpenseFormModal(){
 
                 <label htmlFor="amount" className='mt-4'>Select Category</label>
                 <Select 
-                  options={[...DEFAULT_CATEGORIES, ...aggregatedCategories.map(e => ({"label": e, "value": e}))]}
+                  options={aggregatedCategories.map(e => ({"label": e, "value": e}))}
                   isClearable={true}
                   isMulti={true}
                   closeMenuOnSelect={false}
@@ -134,7 +133,7 @@ export function ExpenseFormModal(){
                 <Select 
                   isMulti={true}
                   isClearable={true}
-                  options={[...DEFAULT_TAGS, ...aggregatedTags.map(e =>  ({"label": e, "value": e}))]}
+                  options={aggregatedTags.map(e =>  ({"label": e, "value": e}))}
                   closeMenuOnSelect={false}
                   onChange={handleTagsChange}
                   theme={(theme) => ({
