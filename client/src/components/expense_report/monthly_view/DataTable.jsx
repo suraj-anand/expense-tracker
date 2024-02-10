@@ -25,7 +25,11 @@ const DataTable = ({ activeMonth, activeYear }) => {
     return (
     <>
         {
-            ( !_.isEmpty(parsedExpense) && activeYear && activeMonth) && parsedExpense[activeYear][activeMonth] && 
+            ( 
+                ( !_.isEmpty(parsedExpense) && activeYear && activeMonth ) && 
+                ( Object.keys(parsedExpense).includes(activeYear) ) &&
+                ( Object.keys(parsedExpense[activeYear]).includes(activeMonth) ) &&
+                parsedExpense[activeYear][activeMonth]) && 
             <div class="table-responsive">
                 <table class="table table-hover">
                     <thead className="table-primary">
@@ -55,10 +59,10 @@ const DataTable = ({ activeMonth, activeYear }) => {
                                         <td>{exp.tags && JSON.parse(exp.tags).map(e => <Badges text={e} />)}</td>
                                         <td>{exp.amount}</td>
                                         <td>
-                                            <UpdateButton expense={exp} id={exp.id} />
+                                            <UpdateButton exp={exp} />
                                         </td>
                                         <td>
-                                            <DeleteButton />
+                                            <DeleteButton exp={exp} />
                                         </td>
                                     </tr>
                                 )
@@ -81,13 +85,13 @@ const DataTable = ({ activeMonth, activeYear }) => {
   )
 }
 
-function UpdateButton({ expense }){
+function UpdateButton({ exp }){
     
-    const { id } = expense;
+    const { id } = exp;
     return (
         <>
-        <UpdateForm expense={expense} />
-        <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target={`#update-${id}`}>
+        <UpdateForm expense={exp} modalId={`monthly-expense-update-${id}`} />
+        <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target={`#monthly-expense-update-${id}`}>
             <RxPencil2 size={24}/>
         </button>
         </>
@@ -95,12 +99,11 @@ function UpdateButton({ expense }){
 
 }
 
-function DeleteButton(){
+function DeleteButton({ exp }){
     
-    const { expenseLoading, parsedExpense, setRefetch } = useContext(ExpenseContext);
+    const { setRefetch } = useContext(ExpenseContext);
 
     async function handleDelete(event, id){
-        console.log(`deleting, ${id}`)
         const response = await axios.delete(`/api/expense/?expenseId=${id}`)
         if([200, 201, 202, 204].includes(response.status)){
             setRefetch(refetch => (!refetch))

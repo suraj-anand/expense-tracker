@@ -5,7 +5,7 @@ import { IoIosCloseCircleOutline } from "react-icons/io";
 import Select from 'react-select'
 import axios from 'axios'
 
-const UpdateForm = ( { expense } ) => {
+const UpdateForm = ( { expense, modalId } ) => {
   
   // Prop
   const { 
@@ -82,7 +82,7 @@ const UpdateForm = ( { expense } ) => {
   }
 
   return (
-    <div className="modal bg-dark" id={`update-${id}`} data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="1">
+    <div className="modal bg-dark" id={modalId} data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="1">
           
           <div className="modal-header">
             <h1 className="modal-title fs-5 text-white" id="exampleModalLabel">Update Expense</h1>
