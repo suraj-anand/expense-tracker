@@ -40,10 +40,10 @@ export default function LoginForm(){
                 name="username" id="username" 
                 placeholder='Username'
                 autoComplete='off'
-                className='login-input form-control my-3' 
+                className='login-input form-control' 
                 required
                 style={{
-                        width: "25rem",
+                        width: "20rem",
                         }}
                 {...register("username")}
                 />
@@ -54,7 +54,7 @@ export default function LoginForm(){
                 autoComplete='off'
                 className='login-input form-control mt-3 mb-5' 
                 required
-                style={{width: "25rem"}}
+                style={{width: "20rem"}}
                 {...register("password")}
                     />
             
