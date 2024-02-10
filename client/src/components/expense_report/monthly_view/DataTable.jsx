@@ -1,24 +1,17 @@
 import { useContext } from "react"
 import { Spinner } from 'react-bootstrap'
-import { ExpenseContext } from "@src/context/ExpenseContext"
-import { AiFillDelete } from "react-icons/ai";
 import { format } from 'date-fns';
 import axios from "axios";
-import Badges from "@src/components/generic/Badges"
 import _ from "lodash"
+import { AiFillDelete } from "react-icons/ai";
+import { RxPencil2 } from "react-icons/rx";
+import { ExpenseContext } from "@src/context/ExpenseContext"
+import Badges from "@src/components/generic/Badges"
+import UpdateForm from "../UpdateForm";
 
 const DataTable = ({ activeMonth, activeYear }) => {
 
-    const { expenseLoading, parsedExpense, setRefetch } = useContext(ExpenseContext);
-    let total_amount = 0;
-
-    async function handleDelete(event, id){
-        console.log(`deleting, ${id}`)
-        const response = await axios.delete(`/api/expense/?expenseId=${id}`)
-        if([200, 201, 202, 204].includes(response.status)){
-            setRefetch(refetch => (!refetch))
-        }
-    }
+    const { expenseLoading, parsedExpense } = useContext(ExpenseContext);
 
     if(expenseLoading) {
         return (
@@ -28,6 +21,7 @@ const DataTable = ({ activeMonth, activeYear }) => {
         )
     }
 
+    let total_amount = 0;
     return (
     <>
         {
@@ -44,6 +38,7 @@ const DataTable = ({ activeMonth, activeYear }) => {
                             <th scope="col">Tags</th>
                             <th scope="col">Amount</th>
                             <th scope="col">#</th>
+                            <th scope="col">#</th>
                         </tr>
                     </thead>
                     <tbody className="align-middle">
@@ -59,7 +54,12 @@ const DataTable = ({ activeMonth, activeYear }) => {
                                         <td>{exp.category && JSON.parse(exp.category).map(e => <Badges text={e} />)}</td>
                                         <td>{exp.tags && JSON.parse(exp.tags).map(e => <Badges text={e} />)}</td>
                                         <td>{exp.amount}</td>
-                                        <td><button className="btn btn-danger" onClick={(e) => {handleDelete(e, exp.id)}}><AiFillDelete size={24} /></button></td>
+                                        <td>
+                                            <UpdateButton expense={exp} id={exp.id} />
+                                        </td>
+                                        <td>
+                                            <DeleteButton />
+                                        </td>
                                     </tr>
                                 )
                             })
@@ -79,6 +79,42 @@ const DataTable = ({ activeMonth, activeYear }) => {
         }
     </>
   )
+}
+
+function UpdateButton({ expense }){
+    
+    const { id } = expense;
+    return (
+        <>
+        <UpdateForm expense={expense} />
+        <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target={`#update-${id}`}>
+            <RxPencil2 size={24}/>
+        </button>
+        </>
+    )
+
+}
+
+function DeleteButton(){
+    
+    const { expenseLoading, parsedExpense, setRefetch } = useContext(ExpenseContext);
+
+    async function handleDelete(event, id){
+        console.log(`deleting, ${id}`)
+        const response = await axios.delete(`/api/expense/?expenseId=${id}`)
+        if([200, 201, 202, 204].includes(response.status)){
+            setRefetch(refetch => (!refetch))
+        }
+    }
+
+
+    return (
+        <>
+            <button className="btn btn-danger" onClick={(e) => {handleDelete(e, exp.id)}}>
+                <AiFillDelete size={24} />
+            </button>
+        </>
+    )
 }
 
 
